@@ -20,7 +20,7 @@ public class User implements UserDetails {
     private String lastName;
     @Column
     private String password;
-    @ManyToMany(cascade=CascadeType.ALL , fetch = FetchType.EAGER)
+    @ManyToMany( fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -63,10 +63,15 @@ public class User implements UserDetails {
         return roles;
     }
 
+
     public void setRoles(String[] role) {
         if (roles == null) roles = new HashSet<>();
-        for (String a : role)
-            roles.add(new Role(a));
+        Role temp;
+        for (String a : role) {
+            temp = new Role(a);
+            temp.setId((a.equals("ROLE_ADMIN")) ? 1l : 2l);
+            roles.add(temp);
+        }
     }
 
     public Long getId() {

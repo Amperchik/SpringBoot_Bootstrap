@@ -3,6 +3,7 @@ package boot.model;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.Set;
 
 
 @Entity
@@ -12,6 +13,17 @@ public class Role implements GrantedAuthority {
     private Long id;
     @Column
     private String role;
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users;
 
     public Role() {
     }
